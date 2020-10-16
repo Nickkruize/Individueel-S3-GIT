@@ -26,7 +26,7 @@ namespace MusicDBAPI.Controllers
         [HttpGet]
         public IEnumerable<Song> Get()
         {
-            return _context.Song.ToList();
+            return _context.Song.ToArray();
         }
 
         // GET api/<SongController>/5

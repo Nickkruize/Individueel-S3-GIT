@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using MusicDBCore.DAL;
+using Microsoft.Extensions.Options;
 
 namespace MusicDBAPI
 {
@@ -32,6 +33,7 @@ namespace MusicDBAPI
                 optionsbuilder.UseLazyLoadingProxies();
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));
             services.AddControllers();
         }
 
@@ -48,6 +50,8 @@ namespace MusicDBAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

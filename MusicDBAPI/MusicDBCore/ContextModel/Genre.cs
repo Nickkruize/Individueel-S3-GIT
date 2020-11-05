@@ -5,20 +5,17 @@ using System.Text;
 
 namespace MusicDBCore.ContextModel
 {
-    public class Artist
+    public class Genre
     {
-        public Artist()
+        public Genre()
         {
-            //this.Genres = new HashSet<Genre>();
+            //this.Artists = new HashSet<Artist>();
         }
 
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public int? StartYear { get; set; }
-        public string ImageFilePath { get; set; }
 
-        public virtual ICollection<Album> Albums { get; set; }
         public virtual ICollection<ArtistGenre> ArtistGenres { get; set; }
     }
 }

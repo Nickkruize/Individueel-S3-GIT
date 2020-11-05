@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicDBCore.DAL;
 
 namespace MusicDBCore.Migrations
 {
     [DbContext(typeof(MusicContext))]
-    partial class MusicContextModelSnapshot : ModelSnapshot
+    [Migration("20201105220759_CreateGenreTable")]
+    partial class CreateGenreTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,6 +54,9 @@ namespace MusicDBCore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("GenreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -63,22 +68,9 @@ namespace MusicDBCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Artist");
-                });
-
-            modelBuilder.Entity("MusicDBCore.ContextModel.ArtistGenre", b =>
-                {
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArtistId", "GenreId");
-
                     b.HasIndex("GenreId");
 
-                    b.ToTable("ArtistGenres");
+                    b.ToTable("Artist");
                 });
 
             modelBuilder.Entity("MusicDBCore.ContextModel.Genre", b =>
@@ -173,19 +165,11 @@ namespace MusicDBCore.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MusicDBCore.ContextModel.ArtistGenre", b =>
+            modelBuilder.Entity("MusicDBCore.ContextModel.Artist", b =>
                 {
-                    b.HasOne("MusicDBCore.ContextModel.Artist", "Artist")
-                        .WithMany("ArtistGenres")
-                        .HasForeignKey("ArtistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MusicDBCore.ContextModel.Genre", "Genre")
-                        .WithMany("ArtistGenres")
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("MusicDBCore.ContextModel.Genre", null)
+                        .WithMany("Artists")
+                        .HasForeignKey("GenreId");
                 });
 
             modelBuilder.Entity("MusicDBCore.ContextModel.Song", b =>

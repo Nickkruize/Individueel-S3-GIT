@@ -15,5 +15,6 @@ namespace MusicDBCore.ContextModel
         public string ImageFilePath { get; set; }
 
         public virtual ICollection<Song> Songs { get; set; }
+        public virtual Artist Artist { get; set; }
     }
 }

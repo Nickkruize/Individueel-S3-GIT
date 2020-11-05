@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 using MusicDBCore.DAL;
-using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
-namespace MusicDBAPI
+namespace Login
 {
     public class Startup
     {
@@ -33,7 +33,8 @@ namespace MusicDBAPI
                 optionsbuilder.UseLazyLoadingProxies();
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));
+
+
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
@@ -52,8 +53,6 @@ namespace MusicDBAPI
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

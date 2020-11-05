@@ -12,18 +12,12 @@ namespace MusicDBCore.ContextModel
         public string Name { get; set; }
         public int? StartYear { get; set; }
         public string ImageFilePath { get; set; }
+
         public virtual ICollection<Album> Albums { get; set; }
 
         public Artist()
         {
 
         }
-
-        //public ArtistModel(int id, string name, int start)
-        //{
-        //    Name = name;
-        //    Id = id;
-        //    StartYear = start;
-        //}
     }
 }

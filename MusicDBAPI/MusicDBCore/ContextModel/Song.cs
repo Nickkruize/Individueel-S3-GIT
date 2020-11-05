@@ -13,5 +13,7 @@ namespace MusicDBCore.ContextModel
         public string Title { get; set; }
         public int Length { get; set; }
         public int? NumberOnAlbum { get; set; }
+
+        public virtual Album Album { get; set; }
     }
 }

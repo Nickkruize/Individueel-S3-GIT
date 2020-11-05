@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicDBAPI", "MusicDBAPI\MusicDBAPI.csproj", "{3055A955-5286-41D2-BD90-7B446E45E362}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDBAPI", "MusicDBAPI\MusicDBAPI.csproj", "{3055A955-5286-41D2-BD90-7B446E45E362}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicDBCore", "MusicDBCore\MusicDBCore.csproj", "{D9D64959-BBBB-47B9-84BE-7E0BD8360319}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicDBCore", "MusicDBCore\MusicDBCore.csproj", "{D9D64959-BBBB-47B9-84BE-7E0BD8360319}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Login", "Login\Login.csproj", "{64F54BB8-B796-4A45-9334-01889A5C4CB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D9D64959-BBBB-47B9-84BE-7E0BD8360319}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9D64959-BBBB-47B9-84BE-7E0BD8360319}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9D64959-BBBB-47B9-84BE-7E0BD8360319}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64F54BB8-B796-4A45-9334-01889A5C4CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F54BB8-B796-4A45-9334-01889A5C4CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F54BB8-B796-4A45-9334-01889A5C4CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F54BB8-B796-4A45-9334-01889A5C4CB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

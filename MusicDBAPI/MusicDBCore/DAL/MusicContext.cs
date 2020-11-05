@@ -19,5 +19,9 @@ namespace MusicDBCore.DAL
 
         public DbSet<Album> Album { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
     }
 }

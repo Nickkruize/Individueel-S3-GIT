@@ -13,7 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication;
 using IGDB_Users.Helpers;
 using IGDB_Users.Services;
@@ -32,17 +31,17 @@ namespace IGDB_Users
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<InventoryContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            );
-
-            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));
-
-            // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+
+            services.AddDbContext<InventoryContext>(optionsbuilder =>
+            {
+                optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));
 
             services.AddControllers().AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -56,21 +55,15 @@ namespace IGDB_Users
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
-            // custom jwt auth middleware
-            app.UseMiddleware<JwtMiddleware>();
-
             app.UseAuthorization();
+
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

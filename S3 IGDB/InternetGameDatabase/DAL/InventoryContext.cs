@@ -30,6 +30,16 @@ namespace DAL
                 .HasOne(bc => bc.Genre)
                 .WithMany(c => c.GameGenres)
                 .HasForeignKey(bc => bc.GenreId);
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Email).IsUnique();
+                entity.Property(e => e.Email).IsRequired();
+                entity.HasIndex(e => e.Username).IsUnique();
+                entity.Property(e => e.Username).IsRequired();
+                entity.Property(e => e.Password).IsRequired();
+            });
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -14,9 +14,9 @@ namespace InternetGameDatabase.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly InventoryContext _context;
+        private readonly IGDBContext _context;
 
-        public GenresController(InventoryContext context)
+        public GenresController(IGDBContext context)
         {
             _context = context;
         }

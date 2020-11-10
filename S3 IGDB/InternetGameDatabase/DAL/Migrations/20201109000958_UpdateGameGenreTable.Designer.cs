@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
-    [DbContext(typeof(InventoryContext))]
+    [DbContext(typeof(IGDBContext))]
     [Migration("20201109000958_UpdateGameGenreTable")]
     partial class UpdateGameGenreTable
     {

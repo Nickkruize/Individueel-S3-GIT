@@ -14,9 +14,9 @@ namespace InternetGameDatabase.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly InventoryContext _context;
+        private readonly IGDBContext _context;
 
-        public ReviewsController(InventoryContext context)
+        public ReviewsController(IGDBContext context)
         {
             _context = context;
         }

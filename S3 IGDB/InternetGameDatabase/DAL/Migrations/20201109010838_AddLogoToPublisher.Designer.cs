@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
-    [DbContext(typeof(InventoryContext))]
+    [DbContext(typeof(IGDBContext))]
     [Migration("20201109010838_AddLogoToPublisher")]
     partial class AddLogoToPublisher
     {

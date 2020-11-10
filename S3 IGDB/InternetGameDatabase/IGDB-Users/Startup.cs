@@ -36,7 +36,7 @@ namespace IGDB_Users
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
 
-            services.AddDbContext<InventoryContext>(optionsbuilder =>
+            services.AddDbContext<IGDBContext>(optionsbuilder =>
             {
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });

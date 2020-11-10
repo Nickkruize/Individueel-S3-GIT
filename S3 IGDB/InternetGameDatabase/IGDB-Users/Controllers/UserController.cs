@@ -5,13 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using DAL;
 using DAL.ContextModel;
+using IGDB_Users.Interface;
 using IGDB_Users.ModelConverter;
 using IGDB_Users.Models;
+using IGDB_Users.Repository;
 using IGDB_Users.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace IGDB_Users.Controllers
 {
@@ -21,13 +24,25 @@ namespace IGDB_Users.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly InventoryContext _context;
+        private readonly IGDBContext _context;
 
-        public UsersController(IUserService userService, InventoryContext context)
+        private readonly IUserRepository _userRepository;
+
+        public UsersController(IGDBContext context)
         {
-            _userService = userService;
-            _context = context;
+            _userRepository = new UserRepository(context);
         }
+
+        //public UsersController(IUserRepository userRepository)
+        //{
+        //    _userRepository = userRepository;
+        //}
+
+        //public UsersController(IUserService userService, IGDBContext context)
+        //{
+        //    _userService = userService;
+        //    _context = context;
+        //}
 
         //[HttpPost("authenticate")]
         //public IActionResult Authenticate(AuthenticateRequest model)
@@ -49,16 +64,16 @@ namespace IGDB_Users.Controllers
         //}
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        public IActionResult Get(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-
+            var user =  _userRepository.GetById(id);
+            UserResponseModel model = ViewModelConverter.UserDTOTOUserResponseModel(user);
             if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(model);
         }
 
         [HttpPost("register")]
@@ -73,9 +88,7 @@ namespace IGDB_Users.Controllers
             var user = ViewModelConverter.RegistrationModelToUser(model);
             try
             {
-                _context.Users.Add(user);
-                _context.SaveChanges();
-                //user.Id = user.Id;
+                _userRepository.AddUser(user);
                 return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
             }
             catch (Exception ex)
@@ -88,7 +101,7 @@ namespace IGDB_Users.Controllers
         public IActionResult Login(LoginModel model)
         {
 
-            var user = _context.Users.Where(e => e.Email == model.Email).SingleOrDefault();
+            var user = _userRepository.GetByEmail(model.Email);
             if (user == null)
             {
                 return BadRequest("Incorrect Information");
@@ -97,7 +110,8 @@ namespace IGDB_Users.Controllers
             {
                 if (user.Password == model.Password)
                 {
-                    return Ok(user);
+                    UserResponseModel response = ViewModelConverter.UserDTOTOUserResponseModel(user);
+                    return Ok(response);
                 }
                 else
                 {
@@ -109,7 +123,7 @@ namespace IGDB_Users.Controllers
         [HttpGet("getall")]
         public IActionResult GetAllUsers()
         {
-            List<User> users = _context.Users.ToList();
+            IEnumerable<User> users = _userRepository.GetAll();
             return Ok(users);
         }
     }

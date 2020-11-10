@@ -20,5 +20,17 @@ namespace IGDB_Users.ModelConverter
 
             return user;
         }
+
+        public static UserResponseModel UserDTOTOUserResponseModel(User user)
+        {
+            UserResponseModel model = new UserResponseModel
+            {
+                Username = user.Username,
+                Email = user.Email,
+                Id = user.Id
+            };
+
+            return model;
+        }
     }
 }

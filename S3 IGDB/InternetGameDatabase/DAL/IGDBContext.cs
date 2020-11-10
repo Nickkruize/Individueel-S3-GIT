@@ -1,15 +1,22 @@
-﻿using System;
-using DAL.ContextModel;
+﻿using DAL.ContextModel;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
-    public class InventoryContext : DbContext
+    public class IGDBContext : DbContext
     {
-        public InventoryContext(DbContextOptions<InventoryContext> options) : base(options)
+        public IGDBContext(DbContextOptions<IGDBContext> options) : base(options)
         {
 
         }
+
+        //private readonly IConfiguration configuration;
+
+        //public IGDBContext(IConfiguration config)
+        //{
+        //    configuration = config;
+        //}
 
         public DbSet<Game> Games { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
@@ -45,6 +52,7 @@ namespace DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }

@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetGameDatabase", "InternetGameDatabase\InternetGameDatabase.csproj", "{DC128D69-1738-4AC5-9718-AACFEA954811}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetGameDatabase", "InternetGameDatabase\InternetGameDatabase.csproj", "{DC128D69-1738-4AC5-9718-AACFEA954811}"
 	ProjectSection(ProjectDependencies) = postProject
 		{61E68150-40D7-4DC2-9D44-7FB04E0822F3} = {61E68150-40D7-4DC2-9D44-7FB04E0822F3}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{61E68150-40D7-4DC2-9D44-7FB04E0822F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{61E68150-40D7-4DC2-9D44-7FB04E0822F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGDB-Users", "IGDB-Users\IGDB-Users.csproj", "{171E3E71-2730-4D76-BA50-118DCED4FD50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,10 @@ Global
 		{61E68150-40D7-4DC2-9D44-7FB04E0822F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61E68150-40D7-4DC2-9D44-7FB04E0822F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61E68150-40D7-4DC2-9D44-7FB04E0822F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{171E3E71-2730-4D76-BA50-118DCED4FD50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{171E3E71-2730-4D76-BA50-118DCED4FD50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{171E3E71-2730-4D76-BA50-118DCED4FD50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{171E3E71-2730-4D76-BA50-118DCED4FD50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

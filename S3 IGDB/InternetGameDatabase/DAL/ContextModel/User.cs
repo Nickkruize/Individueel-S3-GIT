@@ -8,7 +8,7 @@ namespace DAL.ContextModel
     public class User
     {
         public int Id { get; set; }
-        //public int RoleId { get; set; }
+        public Roles Role { get; set; }
         [Required]
         public string Username { get; set; }
         [Required]
@@ -16,8 +16,14 @@ namespace DAL.ContextModel
         [Required]
         public string Password { get; set; }
 
-        //public virtual Role Role { get; set; }
         //public virtual ICollection<Review> Reviews { get; set; }
 
+    }
+
+    public enum Roles
+    {
+        User,
+        Admin,
+        SuperAdmin
     }
 }

@@ -11,6 +11,6 @@ namespace IGDB_Users.Models
         public int Id { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
-        //public string Token { get; set; }
+        public int RoleID { get; set; }
     }
 }

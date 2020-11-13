@@ -27,7 +27,8 @@ namespace IGDB_Users.ModelConverter
             {
                 Username = user.Username,
                 Email = user.Email,
-                Id = user.Id
+                Id = user.Id,
+                RoleID = (int)user.Role
             };
 
             return model;

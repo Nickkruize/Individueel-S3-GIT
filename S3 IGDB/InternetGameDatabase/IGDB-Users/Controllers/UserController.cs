@@ -31,18 +31,8 @@ namespace IGDB_Users.Controllers
         public UsersController(IGDBContext context)
         {
             _userRepository = new UserRepository(context);
+            _context = context;
         }
-
-        //public UsersController(IUserRepository userRepository)
-        //{
-        //    _userRepository = userRepository;
-        //}
-
-        //public UsersController(IUserService userService, IGDBContext context)
-        //{
-        //    _userService = userService;
-        //    _context = context;
-        //}
 
         //[HttpPost("authenticate")]
         //public IActionResult Authenticate(AuthenticateRequest model)
@@ -120,11 +110,40 @@ namespace IGDB_Users.Controllers
             }
         }
 
-        [HttpGet("getall")]
-        public IActionResult GetAllUsers()
+        [HttpGet]
+        public IActionResult Get()
         {
-            IEnumerable<User> users = _userRepository.GetAll();
-            return Ok(users);
+            //if (requester.RoleID > 0)
+            //{
+                IEnumerable<User> users = _userRepository.GetAll();
+                List<UserResponseModel> Users = new List<UserResponseModel>();
+                foreach (User user in users)
+                {
+                    Users.Add(ViewModelConverter.UserDTOTOUserResponseModel(user));
+                }
+                return Ok(Users);
+            //}
+
+            //else
+            //{
+            //    return Unauthorized();
+            //}
+
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user== null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

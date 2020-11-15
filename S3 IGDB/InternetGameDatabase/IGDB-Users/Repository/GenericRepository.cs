@@ -46,5 +46,10 @@ namespace IGDB_Users.Repository
         {
             this.RepositoryContext.Set<T>().Remove(entity);
         }
+
+        public void Save()
+        {
+            this.RepositoryContext.SaveChangesAsync();
+        }
     }
 }

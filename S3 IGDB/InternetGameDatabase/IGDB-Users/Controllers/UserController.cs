@@ -78,6 +78,7 @@ namespace IGDB_Users.Controllers
             try
             {
                 _userRepository.Create(user);
+                _userRepository.Save();
                 return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
             }
             catch
@@ -90,7 +91,14 @@ namespace IGDB_Users.Controllers
         public IActionResult Login(LoginModel model)
         {
             IEnumerable<User> userlist = _userRepository.FindByCondition(x => x.Email == model.Email);
-            User user = userlist.Single(x => x.Email == model.Email);
+
+            User user = new User();
+
+            if (userlist.Count() > 0)
+            {
+                user = userlist.Single(x => x.Email == model.Email);
+            }
+
 
             if (user == null)
             {
@@ -137,8 +145,8 @@ namespace IGDB_Users.Controllers
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            _userRepository.Delete(user);
+            _userRepository.Save();
 
             return Ok();
         }

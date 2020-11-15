@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using InternetGameDatabase.Repository_Interfaces;
+using InternetGameDatabase.Repositories;
 
 namespace InternetGameDatabase
 {
@@ -32,6 +34,12 @@ namespace InternetGameDatabase
             {
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<IGenreRepository,GenreRepository>();
+            services.AddTransient<IGenreRepository, PublisherRepository>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
+
             services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

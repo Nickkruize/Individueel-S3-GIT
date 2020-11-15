@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.ContextModel;
+using InternetGameDatabase.Repository_Interfaces;
 
 namespace InternetGameDatabase.Controllers
 {
@@ -14,50 +15,50 @@ namespace InternetGameDatabase.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly IGDBContext _context;
+        private readonly IReviewRepository _reviewRepository;
 
-        public ReviewsController(IGDBContext context)
+        public ReviewsController(IReviewRepository reviewRepository)
         {
-            _context = context;
+            _reviewRepository = reviewRepository;
         }
 
         // GET: api/Reviews
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
+        public IEnumerable<Review> GetReviews()
         {
-            return await _context.Reviews.ToListAsync();
+            return _reviewRepository.FindAll();
         }
 
         // GET: api/Reviews/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Review>> GetReview(int id)
+        public IActionResult GetReview(int id)
         {
-            var review = await _context.Reviews.FindAsync(id);
+            Review review = _reviewRepository.GetById(id);
 
             if (review == null)
             {
                 return NotFound();
             }
 
-            return review;
+            return Ok(review);
         }
 
         // PUT: api/Reviews/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview(int id, Review review)
+        public IActionResult PutReview(int id, Review review)
         {
             if (id != review.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(review).State = EntityState.Modified;
+            _reviewRepository.Update(review);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _reviewRepository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,33 +79,38 @@ namespace InternetGameDatabase.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Review>> PostReview(Review review)
+        public IActionResult PostReview(Review review)
         {
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
+            _reviewRepository.Create(review);
+            _reviewRepository.Save();
 
             return CreatedAtAction("GetReview", new { id = review.Id }, review);
         }
 
         // DELETE: api/Reviews/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Review>> DeleteReview(int id)
+        public ActionResult<Review> DeleteReview(int id)
         {
-            var review = await _context.Reviews.FindAsync(id);
+            Review review = _reviewRepository.GetById(id);
             if (review == null)
             {
                 return NotFound();
             }
 
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
+            _reviewRepository.Delete(review);
+            _reviewRepository.Save();
 
             return review;
         }
 
         private bool ReviewExists(int id)
         {
-            return _context.Reviews.Any(e => e.Id == id);
+            if (_reviewRepository.GetById(id) == null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

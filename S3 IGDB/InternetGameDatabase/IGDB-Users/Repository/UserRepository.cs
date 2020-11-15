@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.ContextModel;
+using GenericBusinessLogic;
 using IGDB_Users.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

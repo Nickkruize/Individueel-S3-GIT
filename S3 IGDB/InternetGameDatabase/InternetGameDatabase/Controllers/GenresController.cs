@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.ContextModel;
+using InternetGameDatabase.Repository_Interfaces;
 
 namespace InternetGameDatabase.Controllers
 {
@@ -14,50 +15,50 @@ namespace InternetGameDatabase.Controllers
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly IGDBContext _context;
+        private readonly IGenreRepository _genreRepository;
 
-        public GenresController(IGDBContext context)
+        public GenresController(IGenreRepository genreRepository)
         {
-            _context = context;
+            _genreRepository = genreRepository;
         }
 
         // GET: api/Genres
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Genre>>> GetGenres()
+        public IEnumerable<Genre> GetGenres()
         {
-            return await _context.Genres.ToListAsync();
+            return _genreRepository.FindAll();
         }
 
         // GET: api/Genres/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Genre>> GetGenre(int id)
+        public IActionResult GetGenre(int id)
         {
-            var genre = await _context.Genres.FindAsync(id);
+            Genre genre = _genreRepository.GetById(id);
 
             if (genre == null)
             {
                 return NotFound();
             }
 
-            return genre;
+            return Ok(genre);
         }
 
         // PUT: api/Genres/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGenre(int id, Genre genre)
+        public IActionResult PutGenre(int id, Genre genre)
         {
             if (id != genre.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(genre).State = EntityState.Modified;
+            _genreRepository.Update(genre);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _genreRepository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,33 +79,38 @@ namespace InternetGameDatabase.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Genre>> PostGenre(Genre genre)
+        public ActionResult<Genre> PostGenre(Genre genre)
         {
-            _context.Genres.Add(genre);
-            await _context.SaveChangesAsync();
+            _genreRepository.Create(genre);
+            _genreRepository.Save();
 
-            return CreatedAtAction("GetGenre", new { id = genre.Id }, genre);
+            return CreatedAtAction("GetPublisher", new { id = genre.Id }, genre);
         }
 
         // DELETE: api/Genres/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Genre>> DeleteGenre(int id)
+        public IActionResult DeleteGenre(int id)
         {
-            var genre = await _context.Genres.FindAsync(id);
+            Genre genre = _genreRepository.GetById(id);
             if (genre == null)
             {
                 return NotFound();
             }
 
-            _context.Genres.Remove(genre);
-            await _context.SaveChangesAsync();
+            _genreRepository.Delete(genre);
+            _genreRepository.Save();
 
-            return genre;
+            return Ok(genre);
         }
 
         private bool GenreExists(int id)
         {
-            return _context.Genres.Any(e => e.Id == id);
+            if (_genreRepository.GetById(id) == null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

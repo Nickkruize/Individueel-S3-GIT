@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
@@ -8,13 +6,9 @@ using DAL.ContextModel;
 using IGDB_Users.Interface;
 using IGDB_Users.ModelConverter;
 using IGDB_Users.Models;
-using IGDB_Users.Repository;
 using IGDB_Users.Services;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace IGDB_Users.Controllers
 {
@@ -23,8 +17,7 @@ namespace IGDB_Users.Controllers
     [EnableCors("AllowOrigin")]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _userService;
-        private readonly IGDBContext _context;
+        //private readonly IUserService _userService;
 
         private readonly IUserRepository _userRepository;
 
@@ -137,9 +130,9 @@ namespace IGDB_Users.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            User user = _userRepository.GetById(id);
             if (user == null)
             {
                 return NotFound();

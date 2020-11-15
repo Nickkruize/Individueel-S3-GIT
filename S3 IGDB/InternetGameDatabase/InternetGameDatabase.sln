@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGDB-Users", "IGDB-Users\IG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGDB Tests", "IGDB Tests\IGDB Tests.csproj", "{0C5468D3-9F59-4E17-8143-5E7AC92ACED3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericBusinessLogic", "GenericBusinessLogic\GenericBusinessLogic.csproj", "{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{0C5468D3-9F59-4E17-8143-5E7AC92ACED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C5468D3-9F59-4E17-8143-5E7AC92ACED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C5468D3-9F59-4E17-8143-5E7AC92ACED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -81,7 +81,7 @@ namespace IGDB_Users.Controllers
                 _userRepository.AddUser(user);
                 return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
             }
-            catch (Exception ex)
+            catch
             {
                 return BadRequest("Email or Username already in use");
             }

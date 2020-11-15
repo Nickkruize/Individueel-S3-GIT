@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace IGDB_Users.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
         private readonly IGDBContext _context;
 
-        public UserRepository(IGDBContext db)
+        public UserRepository(IGDBContext db) : base(db)
         {
             _context = db;
         }
@@ -23,11 +23,6 @@ namespace IGDB_Users.Repository
         public IEnumerable<User> GetAll()
         {
             return _context.Users.ToList();
-        }
-
-        public User GetById(int id)
-        {
-            return _context.Users.Find(id);
         }
 
         public User AddUser(User user)

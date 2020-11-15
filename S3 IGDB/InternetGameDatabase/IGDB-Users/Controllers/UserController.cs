@@ -28,11 +28,11 @@ namespace IGDB_Users.Controllers
 
         private readonly IUserRepository _userRepository;
 
-        public UsersController(IGDBContext context)
+        public UsersController(IUserRepository repository)
         {
-            _userRepository = new UserRepository(context);
-            _context = context;
+            _userRepository = repository;
         }
+
 
         //[HttpPost("authenticate")]
         //public IActionResult Authenticate(AuthenticateRequest model)
@@ -57,12 +57,12 @@ namespace IGDB_Users.Controllers
         public IActionResult Get(int id)
         {
             var user =  _userRepository.GetById(id);
-            UserResponseModel model = ViewModelConverter.UserDTOTOUserResponseModel(user);
             if (user == null)
             {
                 return NotFound();
             }
 
+            UserResponseModel model = ViewModelConverter.UserDTOTOUserResponseModel(user);
             return Ok(model);
         }
 
@@ -74,11 +74,10 @@ namespace IGDB_Users.Controllers
                 return BadRequest();
             }
 
-
             var user = ViewModelConverter.RegistrationModelToUser(model);
             try
             {
-                _userRepository.AddUser(user);
+                _userRepository.Create(user);
                 return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
             }
             catch
@@ -90,8 +89,9 @@ namespace IGDB_Users.Controllers
         [HttpPost("Login")]
         public IActionResult Login(LoginModel model)
         {
+            IEnumerable<User> userlist = _userRepository.FindByCondition(x => x.Email == model.Email);
+            User user = userlist.Single(x => x.Email == model.Email);
 
-            var user = _userRepository.GetByEmail(model.Email);
             if (user == null)
             {
                 return BadRequest("Incorrect Information");
@@ -113,29 +113,26 @@ namespace IGDB_Users.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            //if (requester.RoleID > 0)
-            //{
-                IEnumerable<User> users = _userRepository.GetAll();
-                List<UserResponseModel> Users = new List<UserResponseModel>();
-                foreach (User user in users)
-                {
-                    Users.Add(ViewModelConverter.UserDTOTOUserResponseModel(user));
-                }
-                return Ok(Users);
-            //}
+            IEnumerable<User> users = _userRepository.FindAll();
+            List<UserResponseModel> Users = new List<UserResponseModel>();
+            foreach (User user in users)
+            {
+                Users.Add(ViewModelConverter.UserDTOTOUserResponseModel(user));
+            }
+            
+            return Ok(Users);
 
             //else
             //{
             //    return Unauthorized();
             //}
-
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user== null)
+            if (user == null)
             {
                 return NotFound();
             }

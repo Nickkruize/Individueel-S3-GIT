@@ -16,6 +16,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using IGDB_Users.Helpers;
 using IGDB_Users.Services;
+using IGDB_Users.Repository;
+using IGDB_Users.Interface;
 
 namespace IGDB_Users
 {
@@ -40,6 +42,8 @@ namespace IGDB_Users
             {
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));
 

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace IGDB_Users.Interface
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<User>
     {
         public IEnumerable<User> GetAll();
-        public User GetById(int id);
         public User AddUser(User user);
         public User GetByEmail(string email);
     }

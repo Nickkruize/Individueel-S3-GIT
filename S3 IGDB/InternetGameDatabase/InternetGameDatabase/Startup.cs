@@ -37,7 +37,7 @@ namespace InternetGameDatabase
 
             services.AddTransient<IGameRepository, GameRepository>();
             services.AddTransient<IGenreRepository,GenreRepository>();
-            services.AddTransient<IGenreRepository, PublisherRepository>();
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
 
             services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()));

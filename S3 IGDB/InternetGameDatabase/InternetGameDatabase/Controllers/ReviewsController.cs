@@ -105,7 +105,7 @@ namespace InternetGameDatabase.Controllers
 
         private bool ReviewExists(int id)
         {
-            if (_reviewRepository.GetById(id) == null)
+            if (_reviewRepository.GetById(id) != null)
             {
                 return true;
             }

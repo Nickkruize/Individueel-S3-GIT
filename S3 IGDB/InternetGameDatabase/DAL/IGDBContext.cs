@@ -51,7 +51,7 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
     }

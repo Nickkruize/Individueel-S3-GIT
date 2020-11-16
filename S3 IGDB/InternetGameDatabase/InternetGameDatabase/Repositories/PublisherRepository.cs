@@ -5,7 +5,7 @@ using InternetGameDatabase.Repository_Interfaces;
 
 namespace InternetGameDatabase.Repositories
 {
-    public class PublisherRepository : GenericRepository<Publisher>, IGenreRepository
+    public class PublisherRepository : GenericRepository<Publisher>, IPublisherRepository
     {
         private readonly IGDBContext _context;
 

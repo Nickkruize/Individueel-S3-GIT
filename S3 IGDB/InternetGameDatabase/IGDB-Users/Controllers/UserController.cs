@@ -46,8 +46,26 @@ namespace IGDB_Users.Controllers
         //    return Ok(users);
         //}
 
+        [HttpGet]
+        public IEnumerable<UserResponseModel> Get()
+        {
+            IEnumerable<User> users = _userRepository.FindAll();
+            List<UserResponseModel> Users = new List<UserResponseModel>();
+            foreach (User user in users)
+            {
+                Users.Add(ViewModelConverter.UserDTOTOUserResponseModel(user));
+            }
+
+            return Users;
+
+            //else
+            //{
+            //    return Unauthorized();
+            //}
+        }
+
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public ActionResult<UserResponseModel> Get(int id)
         {
             var user =  _userRepository.GetById(id);
             if (user == null)
@@ -56,7 +74,7 @@ namespace IGDB_Users.Controllers
             }
 
             UserResponseModel model = ViewModelConverter.UserDTOTOUserResponseModel(user);
-            return Ok(model);
+            return model;
         }
 
         [HttpPost("register")]
@@ -111,23 +129,7 @@ namespace IGDB_Users.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            IEnumerable<User> users = _userRepository.FindAll();
-            List<UserResponseModel> Users = new List<UserResponseModel>();
-            foreach (User user in users)
-            {
-                Users.Add(ViewModelConverter.UserDTOTOUserResponseModel(user));
-            }
-            
-            return Ok(Users);
 
-            //else
-            //{
-            //    return Unauthorized();
-            //}
-        }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

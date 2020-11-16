@@ -105,7 +105,7 @@ namespace InternetGameDatabase.Controllers
 
         private bool PublisherExists(int id)
         {
-            if (_publisherRepository.GetById(id) == null)
+            if (_publisherRepository.GetById(id) != null)
             {
                 return true;
             }

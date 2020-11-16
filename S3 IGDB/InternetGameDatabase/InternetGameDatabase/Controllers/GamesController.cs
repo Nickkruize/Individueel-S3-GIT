@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.ContextModel;
+using InternetGameDatabase.Repository_Interfaces;
 
 namespace InternetGameDatabase.Controllers
 {
@@ -14,32 +15,32 @@ namespace InternetGameDatabase.Controllers
     [ApiController]
     public class GamesController : ControllerBase
     {
-        private readonly IGDBContext _context;
+        private readonly IGameRepository _gameRepository;
 
-        public GamesController(IGDBContext context)
+        public GamesController(IGameRepository gameRepository)
         {
-            _context = context;
+            _gameRepository = gameRepository;
         }
 
         // GET: api/Games
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetGames()
+        public IEnumerable<Game> GetGames()
         {
-            return await _context.Games.ToListAsync();
+            return _gameRepository.FindAll();
         }
 
         // GET: api/Games/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(int id)
+        public IActionResult GetGame(int id)
         {
-            var game = await _context.Games.FindAsync(id);
+            Game game = _gameRepository.GetById(id);
 
             if (game == null)
             {
                 return NotFound();
             }
 
-            return game;
+            return Ok(game);
         }
 
         // PUT: api/Games/5
@@ -53,11 +54,11 @@ namespace InternetGameDatabase.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(game).State = EntityState.Modified;
+            _gameRepository.Update(game);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _gameRepository.Save();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,33 +79,38 @@ namespace InternetGameDatabase.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Game>> PostGame(Game game)
+        public IActionResult PostGame(Game game)
         {
-            _context.Games.Add(game);
-            await _context.SaveChangesAsync();
+            _gameRepository.Create(game);
+            _gameRepository.Save();
 
             return CreatedAtAction("GetGame", new { id = game.Id }, game);
         }
 
         // DELETE: api/Games/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Game>> DeleteGame(int id)
+        public ActionResult<Game> DeleteGame(int id)
         {
-            var game = await _context.Games.FindAsync(id);
+            Game game = _gameRepository.GetById(id);
             if (game == null)
             {
                 return NotFound();
             }
 
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
+            _gameRepository.Delete(game);
+            _gameRepository.Save();
 
             return game;
         }
 
         private bool GameExists(int id)
         {
-            return _context.Games.Any(e => e.Id == id);
+            if (_gameRepository.GetById(id) != null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

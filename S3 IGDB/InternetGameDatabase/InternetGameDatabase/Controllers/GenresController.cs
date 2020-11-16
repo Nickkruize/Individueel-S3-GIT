@@ -105,7 +105,7 @@ namespace InternetGameDatabase.Controllers
 
         private bool GenreExists(int id)
         {
-            if (_genreRepository.GetById(id) == null)
+            if (_genreRepository.GetById(id) != null)
             {
                 return true;
             }

@@ -11,9 +11,9 @@ namespace GenericBusinessLogic
         IEnumerable<T> FindAll();
         IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression);
         T GetById(int id);
-        void Create(T entity);
+        T Create(T entity);
         void Update(T entity);
-        void Delete(T entity);
+        T Delete(T entity);
         void Save();
     }
 }

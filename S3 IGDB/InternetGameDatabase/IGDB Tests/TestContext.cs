@@ -1,10 +1,7 @@
 ﻿using DAL;
 using DAL.ContextModel;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IGDB_Tests
@@ -25,7 +22,6 @@ namespace IGDB_Tests
                 }
                 await databaseContext.SaveChangesAsync();
             }
-
             return databaseContext;
         }
     }

@@ -31,9 +31,10 @@ namespace GenericBusinessLogic
             return this.RepositoryContext.Set<T>().Find(id);
         }
 
-        public void Create(T entity)
+        public T Create(T entity)
         {
             this.RepositoryContext.Set<T>().Add(entity);
+            return entity;
         }
 
         public void Update(T entity)
@@ -41,9 +42,10 @@ namespace GenericBusinessLogic
             this.RepositoryContext.Set<T>().Update(entity);
         }
 
-        public void Delete(T entity)
+        public T Delete(T entity)
         {
             this.RepositoryContext.Set<T>().Remove(entity);
+            return entity;
         }
 
         public void Save()

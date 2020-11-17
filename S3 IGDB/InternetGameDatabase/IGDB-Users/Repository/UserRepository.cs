@@ -20,23 +20,5 @@ namespace IGDB_Users.Repository
         {
             _context = db;
         }
-
-        public IEnumerable<User> GetAll()
-        {
-            return _context.Users.ToList();
-        }
-
-        public User AddUser(User user)
-        {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return user;
-        }
-
-        public User GetByEmail(string email)
-        {
-            return _context.Users.Where(e => e.Email == email).SingleOrDefault();
-        }
     }
 }

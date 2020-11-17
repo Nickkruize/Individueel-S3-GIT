@@ -10,8 +10,5 @@ namespace IGDB_Users.Interface
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        public IEnumerable<User> GetAll();
-        public User AddUser(User user);
-        public User GetByEmail(string email);
     }
 }

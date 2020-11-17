@@ -161,7 +161,6 @@ namespace IGDB_Tests
         [TestMethod]
         public void Create_NewUser_Succesfully()
         {
-            int expectedId = Userdata().Count + 1;
             User newUser = new User()
             {
                 Email = "testuser11@tester.com",
@@ -180,7 +179,6 @@ namespace IGDB_Tests
         [TestMethod]
         public void Create_NewUser_UnSuccesfully_UsernameExists()
         {
-            int expectedId = Userdata().Count + 1;
             User newUser = new User()
             {
                 Email = "testuser11@tester.com",
@@ -202,7 +200,6 @@ namespace IGDB_Tests
         [TestMethod]
         public void Create_NewUser_UnSuccesfully_EmailExists()
         {
-            int expectedId = Userdata().Count + 1;
             User newUser = new User()
             {
                 Email = "testuser8@tester.com",
@@ -223,7 +220,6 @@ namespace IGDB_Tests
         [TestMethod]
         public void Create_NewUser_UnSuccesfully_NoUsernameProvided()
         {
-            int expectedId = Userdata().Count + 1;
             User newUser = new User()
             {
                 Email = "testuser11@tester.com",
@@ -244,7 +240,6 @@ namespace IGDB_Tests
         [TestMethod]
         public void Create_NewUser_UnSuccesfully_NoEmailProvided()
         {
-            int expectedId = Userdata().Count + 1;
             User newUser = new User()
             {
                 Email = null,
@@ -263,6 +258,102 @@ namespace IGDB_Tests
         }
 
         //Update
+        [TestMethod]
+        public void Update_User_Succesfully()
+        {
+            User User = new User()
+            {
+                Email = "testuser5@tester.com",
+                Username = "user5",
+                Password = "test6",
+                Role = Roles.User
+
+            };
+
+            _repo.Update(User);
+
+            Assert.AreEqual(User, _repo.GetById(User.Id));
+
+            _repo.Dispose();
+        }
+
+        [TestMethod]
+        public void Update_User_UnSuccesfully_NonExistantUser()
+        {
+            User User = new User()
+            {
+                Id = 200,
+                Email = "testuser5@tester.com",
+                Username = "user5",
+                Password = "test6",
+                Role = Roles.User
+
+            };
+
+            if (Userdata().Find(e => e.Id == User.Id) != null)
+            {
+                _repo.Update(User);
+            }
+
+            Assert.IsNull(_repo.GetById(User.Id));
+        }
+
+        [TestMethod]
+        public void Update_User_UnSuccesfully_IncorrectUsername()
+        {
+            User User = new User()
+            {
+                Id = 105,
+                Email = "testuser5@tester.com",
+                Username = "user6",
+                Password = "test6",
+                Role = Roles.User
+
+            };
+
+            if (Userdata().Find(e => e.Id == User.Id) != null)
+            {
+                if (NewUserChecks(User))
+                {
+                    _repo.Update(User);
+                }
+            }
+
+            User Expected = Userdata()[4];
+            User Result = _repo.GetById(User.Id);
+
+            Assert.IsTrue(Expected.IsDeepEqual(Result));
+            Assert.IsFalse(User.IsDeepEqual(Result));
+        }
+
+        [TestMethod]
+        public void Update_User_UnSuccesfully_IncorrectEmail()
+        {
+            User User = new User()
+            {
+                Id = 105,
+                Email = "testuser6@tester.com",
+                Username = "user5",
+                Password = "test6",
+                Role = Roles.User
+
+            };
+
+            if (Userdata().Find(e => e.Id == User.Id) != null)
+            {
+                if (NewUserChecks(User))
+                {
+                    _repo.Update(User);
+                }
+            }
+
+            User Expected = Userdata()[4];
+            User Result = _repo.GetById(User.Id);
+
+            Assert.IsTrue(Expected.IsDeepEqual(Result));
+            Assert.IsFalse(User.IsDeepEqual(Result));
+        }
+
 
 
         //Delete

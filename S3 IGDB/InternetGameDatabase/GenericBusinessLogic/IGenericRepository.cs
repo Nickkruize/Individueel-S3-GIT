@@ -15,5 +15,6 @@ namespace GenericBusinessLogic
         void Update(T entity);
         T Delete(T entity);
         void Save();
+        void Dispose();
     }
 }

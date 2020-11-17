@@ -52,5 +52,10 @@ namespace GenericBusinessLogic
         {
             this.RepositoryContext.SaveChangesAsync();
         }
+
+        public void Dispose()
+        {
+            this.RepositoryContext.DisposeAsync();
+        }
     }
 }

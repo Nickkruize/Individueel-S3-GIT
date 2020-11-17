@@ -1,7 +1,5 @@
-﻿using DAL;
-using DAL.ContextModel;
+﻿using DAL.ContextModel;
 using IGDB_Users.Repository;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using DeepEqual.Syntax;

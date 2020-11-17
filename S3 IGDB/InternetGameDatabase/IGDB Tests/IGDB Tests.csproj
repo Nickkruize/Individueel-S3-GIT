@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\IGDB-Users\IGDB-Users.csproj" />
+    <ProjectReference Include="..\InternetGameDatabase\InternetGameDatabase.csproj" />
   </ItemGroup>
 
 </Project>

@@ -354,8 +354,6 @@ namespace IGDB_Tests
             Assert.IsFalse(User.IsDeepEqual(Result));
         }
 
-
-
         //Delete
         [TestMethod]
         public void DeleteUser_User_Succesfully()

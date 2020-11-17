@@ -281,8 +281,6 @@ namespace IGDB_Tests
             _repo.Delete(newUser);
             _repo.Save();
 
-            User user = _repo.GetById(103);
-
             Assert.IsNull(_repo.GetById(newUser.Id));
         }
 
@@ -303,7 +301,7 @@ namespace IGDB_Tests
 
             User result = _repo.GetById(newUser.Id);
 
-            Assert.IsNotNull(_repo.GetById(newUser.Id));
+            Assert.IsNotNull(result);
             Assert.AreEqual(newUser, result);
         }
 

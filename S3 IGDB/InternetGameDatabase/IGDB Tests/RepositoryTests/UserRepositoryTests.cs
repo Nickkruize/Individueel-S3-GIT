@@ -16,7 +16,7 @@ namespace IGDB_Tests
 
         public UserRepositoryTests()
         {
-            _repo = new UserRepository(GetDatabaseContext<User>(Userdata(), "testdb").Result);
+            _repo = new UserRepository(GetDatabaseContext<User>(Userdata(), "UserRepoTestDB").Result);
         }
 
         private List<User> Userdata()
@@ -379,18 +379,11 @@ namespace IGDB_Tests
         {
             using IGDBContext context = GetDatabaseContext<User>(Userdata(), "DeleteUserUnsucces").Result;
             UserRepository repo = new UserRepository(context);
-            User newUser = new User()
-            {
-                Id = 11,
-                Email = "blabla@tester.com",
-                Username = "blabla103",
-                Password = "bla103",
-                Role = Roles.User
-            };
+            int userID = 11;
 
             try
             {
-                repo.Delete(11);
+                repo.Delete(userID);
                 repo.Save();
             }
             catch(Exception ex)

@@ -33,7 +33,7 @@ namespace InternetGameDatabase.Controllers
         [HttpGet("{id}")]
         public IActionResult GetGenre(int id)
         {
-            Genre genre = _genreRepository.GetById(id);
+            Genre genre = _genreRepository.GetByIdWithGames(id);
 
             if (genre == null)
             {

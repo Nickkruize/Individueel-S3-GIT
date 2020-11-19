@@ -33,6 +33,7 @@ namespace InternetGameDatabase
             services.AddDbContext<IGDBContext>(optionsbuilder =>
             {
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                //optionsbuilder.UseLazyLoadingProxies();
             });
 
             services.AddTransient<IGameRepository, GameRepository>();

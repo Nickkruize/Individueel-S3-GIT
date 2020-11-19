@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(IGDBContext))]
-    partial class InventoryContextModelSnapshot : ModelSnapshot
+    [Migration("20201118215516_ChangePublisherGame")]
+    partial class ChangePublisherGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +109,6 @@ namespace DAL.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("GameId1")
@@ -120,7 +121,6 @@ namespace DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
@@ -129,8 +129,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameId1");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -204,15 +202,7 @@ namespace DAL.Migrations
                         .WithMany("Reviews")
                         .HasForeignKey("GameId1");
 
-                    b.HasOne("DAL.ContextModel.User", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Game");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DAL.ContextModel.Game", b =>
@@ -230,11 +220,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.ContextModel.Publisher", b =>
                 {
                     b.Navigation("Games");
-                });
-
-            modelBuilder.Entity("DAL.ContextModel.User", b =>
-                {
-                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

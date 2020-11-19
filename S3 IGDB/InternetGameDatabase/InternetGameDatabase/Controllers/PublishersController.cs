@@ -26,14 +26,15 @@ namespace InternetGameDatabase.Controllers
         [HttpGet]
         public IEnumerable<Publisher> GetPublishers()
         {
-            return  _publisherRepository.FindAll();
+            return _publisherRepository.GetAll();
+            //return  _publisherRepository.FindAll();
         }
 
         // GET: api/Publishers/5
         [HttpGet("{id}")]
         public IActionResult GetPublisher(int id)
         {
-            Publisher publisher = _publisherRepository.GetById(id);
+            Publisher publisher = _publisherRepository.GetByIdWithGames(id);
 
             if (publisher == null)
             {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DAL.ContextModel;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DAL.ContextModel
+namespace InternetGameDatabase.ViewModel
 {
-    public class Game
+    public class GameListViewModel
     {
         public int Id { get; set; }
         public int PublisherId { get; set; }
@@ -13,9 +14,10 @@ namespace DAL.ContextModel
         public string Description { get; set; }
         public string Image { get; set; }
         public int ReleaseYear { get; set; }
+        public List<Genre> genres { get; set; }
 
-        public virtual Publisher Publisher { get; set; }
+        public Publisher Publisher { get; set; }
         public ICollection<Review> Reviews { get; set; }
-        public virtual ICollection<GameGenre> GameGenres { get; set; }
+        public ICollection<GameGenre> GameGenres { get; set; }
     }
 }

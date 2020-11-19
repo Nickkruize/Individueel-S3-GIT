@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.ContextModel;
 using InternetGameDatabase.Repository_Interfaces;
+using InternetGameDatabase.ViewModel;
 
 namespace InternetGameDatabase.Controllers
 {
@@ -24,16 +25,23 @@ namespace InternetGameDatabase.Controllers
 
         // GET: api/Games
         [HttpGet]
-        public IEnumerable<Game> GetGames()
+        public IEnumerable<GameListViewModel> GetGames()
         {
-            return _gameRepository.FindAll();
+            List<GameListViewModel> result = new List<GameListViewModel>();
+
+            foreach (Game game in _gameRepository.GetAll().ToList())
+            {
+                result.Add(ModelConverter.GameEntityToGameListViewModel(game));
+            }
+
+            return result;
         }
 
         // GET: api/Games/5
         [HttpGet("{id}")]
         public IActionResult GetGame(int id)
         {
-            Game game = _gameRepository.GetById(id);
+            Game game = _gameRepository.GetByIdWithPublisherAndGenres(id);
 
             if (game == null)
             {

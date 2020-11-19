@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using DAL.ContextModel;
 using InternetGameDatabase.Repository_Interfaces;
+using InternetGameDatabase.ViewModel;
 
 namespace InternetGameDatabase.Controllers
 {
@@ -33,14 +34,14 @@ namespace InternetGameDatabase.Controllers
         [HttpGet("{id}")]
         public IActionResult GetReview(int id)
         {
-            Review review = _reviewRepository.GetById(id);
+            Review review = _reviewRepository.GetByIdWithUserAndGame(id);
 
             if (review == null)
             {
                 return NotFound();
             }
 
-            return Ok(review);
+            return Ok(ModelConverter.ReviewEntityToReadViewModel(review));
         }
 
         // PUT: api/Reviews/5

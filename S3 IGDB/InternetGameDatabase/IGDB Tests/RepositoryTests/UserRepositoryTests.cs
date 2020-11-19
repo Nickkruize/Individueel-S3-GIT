@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using DeepEqual.Syntax;
 using System.Linq;
+using DAL;
 
 namespace IGDB_Tests
 {
@@ -356,19 +357,23 @@ namespace IGDB_Tests
         [TestMethod]
         public void DeleteUser_User_Succesfully()
         {
-            User newUser = new User()
+            using (IGDBContext context = GetDatabaseContext<User>(Userdata()).Result)
             {
-                Id = 103,
-                Email = "testuser103@tester.com",
-                Username = "user103",
-                Password = "test103",
-                Role = Roles.Admin
-            };
-            
-            _repo.Delete(newUser);
-            _repo.Save();
+                UserRepository repo = new UserRepository(context);
+                User newUser = new User()
+                {
+                    Id = 103,
+                    Email = "testuser103@tester.com",
+                    Username = "user103",
+                    Password = "test103",
+                    Role = Roles.Admin
+                };
 
-            Assert.IsNull(_repo.GetById(newUser.Id));
+                repo.Delete(newUser);
+                repo.Save();
+
+                Assert.IsNull(repo.GetById(newUser.Id));
+            }
         }
 
         [TestMethod]

@@ -5,5 +5,6 @@ namespace InternetGameDatabase.Repository_Interfaces
 {
     public interface IGenreRepository : IGenericRepository<Genre>
     {
+        Genre GetByIdWithGames(int id);
     }
 }

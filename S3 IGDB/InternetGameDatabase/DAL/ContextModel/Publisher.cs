@@ -10,6 +10,7 @@ namespace DAL.ContextModel
         public string Name { get; set; }
         public int FoundingYear { get; set; }
         public string Logo { get; set; }
+
         public virtual ICollection<Game> Games { get; set; }
     }
 }

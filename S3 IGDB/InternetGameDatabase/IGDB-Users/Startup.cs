@@ -40,6 +40,7 @@ namespace IGDB_Users
 
             services.AddDbContext<IGDBContext>(optionsbuilder =>
             {
+                optionsbuilder.UseLazyLoadingProxies();
                 optionsbuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 

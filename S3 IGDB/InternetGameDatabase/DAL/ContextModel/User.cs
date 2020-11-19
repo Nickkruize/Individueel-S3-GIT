@@ -15,8 +15,7 @@ namespace DAL.ContextModel
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-
-        //public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
 
     }
 

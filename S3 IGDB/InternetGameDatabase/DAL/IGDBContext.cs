@@ -11,13 +11,6 @@ namespace DAL
 
         }
 
-        //private readonly IConfiguration configuration;
-
-        //public IGDBContext(IConfiguration config)
-        //{
-        //    configuration = config;
-        //}
-
         public DbSet<Game> Games { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Genre> Genres { get; set; }

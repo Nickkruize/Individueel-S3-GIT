@@ -15,6 +15,7 @@ namespace InternetGameDatabase.Controllers
     [ApiController]
     public class PublishersController : ControllerBase
     {
+        //JustForTesting
         private readonly IPublisherRepository _publisherRepository;
 
         public PublishersController(IPublisherRepository publisherRepository)

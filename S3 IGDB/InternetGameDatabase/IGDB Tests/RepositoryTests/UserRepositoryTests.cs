@@ -357,28 +357,28 @@ namespace IGDB_Tests
         [TestMethod]
         public void DeleteUser_User_Succesfully()
         {
-            using (IGDBContext context = GetDatabaseContext<User>(Userdata()).Result)
+            using IGDBContext context = GetDatabaseContext<User>(Userdata()).Result;
+            UserRepository repo = new UserRepository(context);
+            User newUser = new User()
             {
-                UserRepository repo = new UserRepository(context);
-                User newUser = new User()
-                {
-                    Id = 103,
-                    Email = "testuser103@tester.com",
-                    Username = "user103",
-                    Password = "test103",
-                    Role = Roles.Admin
-                };
+                Id = 103,
+                Email = "testuser103@tester.com",
+                Username = "user103",
+                Password = "test103",
+                Role = Roles.Admin
+            };
 
-                repo.Delete(newUser);
-                repo.Save();
+            repo.Delete(newUser);
+            repo.Save();
 
-                Assert.IsNull(repo.GetById(newUser.Id));
-            }
+            Assert.IsNull(repo.GetById(newUser.Id));
         }
 
         [TestMethod]
         public void DeleteUser_User_UnSuccesfully()
         {
+            using IGDBContext context = GetDatabaseContext<User>(Userdata()).Result;
+            UserRepository repo = new UserRepository(context);
             User newUser = new User()
             {
                 Id = 103,
@@ -388,14 +388,13 @@ namespace IGDB_Tests
                 Role = Roles.User
             };
 
-            _repo.Delete(newUser);
-            _repo.Save();
+            repo.Delete(newUser);
+            repo.Save();
 
-            User result = _repo.GetById(newUser.Id);
+            User result = repo.GetById(newUser.Id);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(newUser, result);
         }
-
     }
 }

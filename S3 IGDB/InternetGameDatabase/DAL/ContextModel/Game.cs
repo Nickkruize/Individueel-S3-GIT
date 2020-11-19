@@ -15,7 +15,7 @@ namespace DAL.ContextModel
         public int ReleaseYear { get; set; }
 
         public virtual Publisher Publisher { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<GameGenre> GameGenres { get; set; }
     }
 }

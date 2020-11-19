@@ -12,9 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGDB-Users", "IGDB-Users\IGDB-Users.csproj", "{171E3E71-2730-4D76-BA50-118DCED4FD50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IGDB Tests", "IGDB Tests\IGDB Tests.csproj", "{0C5468D3-9F59-4E17-8143-5E7AC92ACED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IGDB Tests", "IGDB Tests\IGDB Tests.csproj", "{0C5468D3-9F59-4E17-8143-5E7AC92ACED3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericBusinessLogic", "GenericBusinessLogic\GenericBusinessLogic.csproj", "{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericBusinessLogic", "GenericBusinessLogic\GenericBusinessLogic.csproj", "{5D799CF9-B053-47A6-ACA5-A34F5F7BEAE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

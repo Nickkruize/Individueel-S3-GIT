@@ -18,7 +18,7 @@ namespace IGDB_Tests.ControllerTests
 
         public UserControllerTests()
         {
-            UserRepository _repo = new UserRepository(GetDatabaseContext<User>(Userdata()).Result);
+            UserRepository _repo = new UserRepository(GetDatabaseContext<User>(Userdata(), "UserControllerTestDB").Result);
             controller = new UsersController(_repo);
         }
 
@@ -30,7 +30,7 @@ namespace IGDB_Tests.ControllerTests
             {
                 User user = new User()
                 {
-                    Id = i+100,
+                    Id = i,
                     Email = $"testuser{i}@tester.com",
                     Username = $"user{i}",
                     Password = $"test{i}",

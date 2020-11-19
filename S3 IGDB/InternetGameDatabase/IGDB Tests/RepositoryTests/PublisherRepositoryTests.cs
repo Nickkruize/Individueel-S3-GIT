@@ -15,7 +15,7 @@ namespace IGDB_Tests.RepositoryTests
 
         public PublisherRepositoryTests()
         {
-            _repo = new PublisherRepository(GetDatabaseContext<Publisher>(Publisherdata()).Result);
+            _repo = new PublisherRepository(GetDatabaseContext<Publisher>(Publisherdata(), "publishertestdb").Result);
         }
 
         private List<Publisher> Publisherdata()

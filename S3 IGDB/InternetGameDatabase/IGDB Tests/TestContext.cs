@@ -8,9 +8,9 @@ namespace IGDB_Tests
 {
     public class TestContext
     {
-        public async Task<IGDBContext> GetDatabaseContext<T>(List<T> data) where T : class
+        public async Task<IGDBContext> GetDatabaseContext<T>(List<T> data, string dbName) where T : class
         {
-            var options = new DbContextOptionsBuilder<IGDBContext>().UseInMemoryDatabase(databaseName: "testdb").EnableSensitiveDataLogging().Options;
+            var options = new DbContextOptionsBuilder<IGDBContext>().UseInMemoryDatabase(databaseName: dbName).EnableSensitiveDataLogging().Options;
             var databaseContext = new IGDBContext(options);
             databaseContext.Database.EnsureCreated();
 

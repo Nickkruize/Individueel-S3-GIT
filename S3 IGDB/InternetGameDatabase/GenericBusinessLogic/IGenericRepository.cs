@@ -13,7 +13,7 @@ namespace GenericBusinessLogic
         T GetById(int id);
         T Create(T entity);
         void Update(T entity);
-        T Delete(T entity);
+        void Delete(T entity);
         void Save();
         void Dispose();
     }

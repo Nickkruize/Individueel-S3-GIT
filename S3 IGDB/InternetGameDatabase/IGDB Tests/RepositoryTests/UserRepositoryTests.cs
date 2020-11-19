@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DeepEqual.Syntax;
 using System.Linq;
 using DAL;
+using System;
 
 namespace IGDB_Tests
 {
@@ -15,7 +16,7 @@ namespace IGDB_Tests
 
         public UserRepositoryTests()
         {
-            _repo = new UserRepository(GetDatabaseContext<User>(Userdata()).Result);
+            _repo = new UserRepository(GetDatabaseContext<User>(Userdata(), "testdb").Result);
         }
 
         private List<User> Userdata()
@@ -26,7 +27,7 @@ namespace IGDB_Tests
             {
                 User user = new User()
                 {
-                    Id = i+100,
+                    Id = i,
                     Email = $"testuser{i}@tester.com",
                     Username = $"user{i}",
                     Password = $"test{i}",
@@ -65,7 +66,7 @@ namespace IGDB_Tests
         public void GetUserByIdUserExistsLowerBoundary()
         {
             User expected = Userdata()[0];
-            User result = _repo.GetById(101);
+            User result = _repo.GetById(1);
 
             Assert.IsNotNull(result);
             Assert.IsTrue(expected.IsDeepEqual(result));
@@ -75,7 +76,7 @@ namespace IGDB_Tests
         public void GetUserByIdUserExistsUpperBoundary()
         {
             User expected = Userdata()[9];
-            User result = _repo.GetById(110);
+            User result = _repo.GetById(10);
 
             Assert.IsNotNull(result);
             Assert.IsTrue(expected.IsDeepEqual(result));
@@ -260,6 +261,8 @@ namespace IGDB_Tests
         [TestMethod]
         public void Update_User_Succesfully()
         {
+            using IGDBContext context = GetDatabaseContext<User>(Userdata(), "UpdateSucces").Result;
+            UserRepository repo = new UserRepository(context);
             User User = new User()
             {
                 Email = "testuser5@tester.com",
@@ -269,11 +272,9 @@ namespace IGDB_Tests
 
             };
 
-            _repo.Update(User);
+            repo.Update(User);
 
-            Assert.AreEqual(User, _repo.GetById(User.Id));
-
-            _repo.Dispose();
+            Assert.AreEqual(User, repo.GetById(User.Id));
         }
 
         [TestMethod]
@@ -281,7 +282,7 @@ namespace IGDB_Tests
         {
             User User = new User()
             {
-                Id = 200,
+                Id = 11,
                 Email = "testuser5@tester.com",
                 Username = "user5",
                 Password = "test6",
@@ -300,9 +301,11 @@ namespace IGDB_Tests
         [TestMethod]
         public void Update_User_UnSuccesfully_IncorrectUsername()
         {
+            using IGDBContext context = GetDatabaseContext<User>(Userdata(), "UpdateUsername").Result;
+            UserRepository repo = new UserRepository(context);
             User User = new User()
             {
-                Id = 105,
+                Id = 5,
                 Email = "testuser5@tester.com",
                 Username = "user6",
                 Password = "test6",
@@ -314,12 +317,12 @@ namespace IGDB_Tests
             {
                 if (NewUserChecks(User))
                 {
-                    _repo.Update(User);
+                    repo.Update(User);
                 }
             }
 
             User Expected = Userdata()[4];
-            User Result = _repo.GetById(User.Id);
+            User Result = repo.GetById(User.Id);
 
             Assert.IsTrue(Expected.IsDeepEqual(Result));
             Assert.IsFalse(User.IsDeepEqual(Result));
@@ -328,9 +331,11 @@ namespace IGDB_Tests
         [TestMethod]
         public void Update_User_UnSuccesfully_IncorrectEmail()
         {
+            using IGDBContext context = GetDatabaseContext<User>(Userdata(), "UpdateEmail").Result;
+            UserRepository repo = new UserRepository(context);
             User User = new User()
             {
-                Id = 105,
+                Id = 5,
                 Email = "testuser6@tester.com",
                 Username = "user5",
                 Password = "test6",
@@ -342,12 +347,12 @@ namespace IGDB_Tests
             {
                 if (NewUserChecks(User))
                 {
-                    _repo.Update(User);
+                    repo.Update(User);
                 }
             }
 
             User Expected = Userdata()[4];
-            User Result = _repo.GetById(User.Id);
+            User Result = repo.GetById(User.Id);
 
             Assert.IsTrue(Expected.IsDeepEqual(Result));
             Assert.IsFalse(User.IsDeepEqual(Result));
@@ -355,46 +360,43 @@ namespace IGDB_Tests
 
         //Delete
         [TestMethod]
-        public void DeleteUser_User_Succesfully()
+        public void DeleteUser_Succesfully()
         {
-            using IGDBContext context = GetDatabaseContext<User>(Userdata()).Result;
+            using IGDBContext context = GetDatabaseContext<User>(Userdata(), "DeleteUserSucces").Result;
             UserRepository repo = new UserRepository(context);
-            User newUser = new User()
-            {
-                Id = 103,
-                Email = "testuser103@tester.com",
-                Username = "user103",
-                Password = "test103",
-                Role = Roles.Admin
-            };
+            int userId = 3;
 
-            repo.Delete(newUser);
+            repo.Delete(userId);
             repo.Save();
 
-            Assert.IsNull(repo.GetById(newUser.Id));
+
+            Assert.IsNull(repo.GetById(userId));
         }
 
         [TestMethod]
-        public void DeleteUser_User_UnSuccesfully()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void DeleteUser_UnSuccesfully()
         {
-            using IGDBContext context = GetDatabaseContext<User>(Userdata()).Result;
+            using IGDBContext context = GetDatabaseContext<User>(Userdata(), "DeleteUserUnsucces").Result;
             UserRepository repo = new UserRepository(context);
             User newUser = new User()
             {
-                Id = 103,
+                Id = 11,
                 Email = "blabla@tester.com",
                 Username = "blabla103",
                 Password = "bla103",
                 Role = Roles.User
             };
 
-            repo.Delete(newUser);
-            repo.Save();
-
-            User result = repo.GetById(newUser.Id);
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(newUser, result);
+            try
+            {
+                repo.Delete(11);
+                repo.Save();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace GenericBusinessLogic
 {
@@ -42,10 +43,14 @@ namespace GenericBusinessLogic
             this.RepositoryContext.Set<T>().Update(entity);
         }
 
-        public T Delete(T entity)
+        public void Delete(T entity)
         {
             this.RepositoryContext.Set<T>().Remove(entity);
-            return entity;
+        }
+
+        public void Delete(int id)
+        {
+            this.RepositoryContext.Remove(RepositoryContext.Set<T>().Find(id));
         }
 
         public void Save()

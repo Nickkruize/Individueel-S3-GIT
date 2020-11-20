@@ -26,5 +26,5 @@ jobs:
     #   solution: '$(solution)'
     #   run: dotnet build --configuration Release --no-restore
     - name: Test
-      solution: '$(solution)'
+      solution: '**/*.sln'
       run: dotnet test --no-restore --verbosity normal

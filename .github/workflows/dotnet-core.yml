@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-variables:
-  solution: '**/*.sln'
-
 jobs:
   build:
 
@@ -26,5 +23,4 @@ jobs:
     #   solution: '$(solution)'
     #   run: dotnet build --configuration Release --no-restore
     - name: Test
-      solution: '**/*.sln'
       run: dotnet test --no-restore --verbosity normal

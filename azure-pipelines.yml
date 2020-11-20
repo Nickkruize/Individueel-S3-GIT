@@ -31,6 +31,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: "test"
-    project: "**/*/IGDB Tests.csproj"
+    project: "**/*/IGDB Tests/IGDB Tests.csproj"
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'

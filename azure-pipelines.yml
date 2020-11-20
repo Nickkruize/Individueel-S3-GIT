@@ -39,4 +39,6 @@ steps:
     command: 'test'
     projects: '**/*IGDB Tests.dll'
     arguments: '--no-restore'
-  displayName: 'Run Tests'
+    displayName: 'Run Tests'
+      platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'

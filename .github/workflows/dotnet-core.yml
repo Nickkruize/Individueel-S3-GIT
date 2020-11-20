@@ -23,5 +23,5 @@ jobs:
     #   solution: '$(solution)'
     #   run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
-      working-directory: src/S3 IGDB/InternetGameDatabase
+      run: dotnet test InternetGameDatabase.sln --no-restore --verbosity normal
+      # working-directory: **/S3 IGDB/InternetGameDatabase

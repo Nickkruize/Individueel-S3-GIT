@@ -87,5 +87,12 @@ namespace IGDB_Tests.ControllerTests
         public void FindByExpression_ExistingID()
         {
         }
+
+        //[TestMethod]
+        //public void IntentionalFail()
+        //{
+        //    Assert.Fail();
+        //}
+
     }
 }

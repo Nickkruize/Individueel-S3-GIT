@@ -24,4 +24,4 @@ jobs:
     #   run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-      working-directory: src/S3 IGDB/InternetGameDatabase
+      working-directory: **/*/

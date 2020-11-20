@@ -5,6 +5,8 @@
     <RootNamespace>IGDB_Tests</RootNamespace>
 
     <IsPackable>false</IsPackable>
+
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>

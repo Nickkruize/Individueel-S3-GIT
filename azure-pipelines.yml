@@ -28,13 +28,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    Other Console Options: "Framework:.NETCoreApp,Version=v3.1"
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-    - task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'test'
     projects: '**/*IGDB Tests.dll'
@@ -42,3 +36,5 @@ steps:
     displayName: 'Run Tests'
       platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+

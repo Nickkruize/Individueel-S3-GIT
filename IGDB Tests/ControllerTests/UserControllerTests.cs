@@ -88,11 +88,11 @@ namespace IGDB_Tests.ControllerTests
         {
         }
 
-        //[TestMethod]
-        //public void IntentionalFail()
-        //{
-        //    Assert.Fail();
-        //}
+        [TestMethod]
+        public void IntentionalFail()
+        {
+            Assert.Fail();
+        }
 
     }
 }
